@@ -1,0 +1,8 @@
+
+# ****** TERRAFORM ****** #
+
+.terraform
+.terraform.lock.hcl
+
+# *********************** #
+

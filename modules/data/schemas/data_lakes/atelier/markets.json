@@ -1,0 +1,26 @@
+
+{
+  "tables": [
+    {
+      "name": "Markets",
+      "columns": [
+        {
+          "name": "market_id",
+          "type": "SERIAL",
+          "constraints": ["PRIMARY KEY", "NOT NULL"]
+        },
+        {
+          "name": "market_symbol",
+          "type": "VARCHAR(100)",
+          "constraints": ["NOT NULL"]
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "constraints": ["DEFAULT TRUE"]
+        }
+      ]
+    }
+  ]
+}
+
