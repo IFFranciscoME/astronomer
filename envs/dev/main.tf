@@ -32,3 +32,13 @@ module "networking" {
 
 }
 
+module "events" {
+
+  source = "../../modules/events/"
+  region = var.region
+  environment = var.environment
+
+  vpc_id = module.networking.data_platform_vpc_id
+
+}
+

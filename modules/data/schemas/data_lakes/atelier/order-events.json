@@ -1,0 +1,20 @@
+{
+  "name": "order-events",
+  "columns": [
+    {
+      "name": "order_id",
+      "type": "SERIAL",
+      "constraints": ["PRIMARY KEY", "NOT NULL"]
+    },
+    {
+      "name": "order_type",
+      "type": "VARCHAR(100)",
+      "constraints": ["NOT NULL"]
+    },
+    {
+      "name": "symbol_id",
+      "type": "VARCHAR(100)",
+      "constraints": ["NOT NULL"]
+    }
+  ]
+}

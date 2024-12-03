@@ -1,0 +1,20 @@
+{
+  "name": "orderbooks",
+  "columns": [
+    {
+      "name": "orderbook_id",
+      "type": "SERIAL",
+      "constraints": ["PRIMARY KEY", "NOT NULL"]
+    },
+    {
+      "name": "timestamp",
+      "type": "VARCHAR(100)",
+      "constraints": ["NOT NULL"]
+    },
+    {
+      "name": "symbol_id",
+      "type": "VARCHAR(100)",
+      "constraints": ["NOT NULL"]
+    }
+  ]
+}

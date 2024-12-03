@@ -4,6 +4,9 @@ project_id         = "dev-data-platform"
 region             = "us-central1"
 zone               = "us-central1-a"
 
+cmp_instance_type  = "e2-small"
+cmp_instance_name  = "progression_server"
+
 db_instance_name   = "dev-datalake-instance"
 db_name            = "dev-datalake-db"
 db_instance_tier   = "db-f1-micro"

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message Progression {
+  string device_id = 1;
+  float temperature = 2;
+  float humidity = 3;
+  int64 timestamp = 4;
+}
+
