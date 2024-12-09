@@ -25,12 +25,6 @@ variable "project_id" {
   description = "GCP Related: The whole project ID"
 }
 
-variable "service_account_email" {
-  type        = string
-  description = "The email of the service_account authorized to perform this task"
-  default = var.gcp_client_email
-}
-
 // ------------------------------------------------------------------------------- NETWORKING -- //
 // ------------------------------------------------------------------------------- ---------- -- //
 
@@ -92,17 +86,30 @@ variable "db_engine_version" {
   description = "the database's engine version"
 }
 
+// ----------------------------------------------------------------------------------- COMPUTE -- //
+// ----------------------------------------------------------------------------------- ------- -- //
+
+variable "cmp_instance_type" {
+  type        = string
+  description = "The compute instance type to be use"
+  default     = "e2-small"
+}
+
+variable "cmp_instance_name" {
+  type        = string
+  description = "The compute instance name to asign"
+}
+
+// ------------------------------------------------------------------------------- CREDENTIALS -- //
+// ------------------------------------------------------------------------------- ----------- -- //
+
+variable "gcp_credentials" {}
+
 variable "gcp_private_key_id" {}
 variable "gcp_private_key" {}
 variable "gcp_client_email" {}
 variable "gcp_client_id" {}
-
-
-// ----------------------------------------------------------------------------------- EVENTS -- //
-// ----------------------------------------------------------------------------------- ------ -- //
-
-// ---------------------------------------------------------------------------------- REGISTRY -- //
-// ---------------------------------------------------------------------------------- -------- -- //
-
-// ---------------------------------------------------------------------------------- REGISTRY -- //
-// ---------------------------------------------------------------------------------- -------- -- //
+variable "gcp_client_cert_url" {}
+variable "gcp_auth_provider" {}
+variable "gcp_token_uri" {}
+variable "gcp_auth_uri" {}

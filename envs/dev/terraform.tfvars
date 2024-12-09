@@ -1,6 +1,6 @@
 
 environment        = "dev"
-project_id         = "dev-data-platform"
+project_id         = "astronomer-88"
 region             = "us-central1"
 zone               = "us-central1-a"
 
@@ -16,7 +16,7 @@ db_schema         = "schema"
 vpc_id             = "data_platform"
 vpc_routing_mode   = "REGIONAL"
 vpc_dl_subnet_ipv4 = "192.168.1.0/24"
-vpc_dl_subnet_ipv6 = "2001:db8:1::/64"
+vpc_dl_subnet_ipv6 = "2001:fd20:a:b::/48"
 vpc_dw_subnet_ipv4 = "192.168.2.0/24"
 vpc_dw_subnet_ipv6 = "2001:db8:2::/64"
 

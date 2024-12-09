@@ -43,7 +43,6 @@ resource "google_compute_subnetwork" "data_warehouse_subnet" {
 }
 
 resource "google_compute_firewall" "data_platform_firewall" {
-
   name    = "data-platform-firewall"
   network = google_compute_network.data_platform_vpc.id
 
@@ -62,6 +61,5 @@ resource "google_compute_firewall" "data_platform_firewall" {
     var.vpc_dw_subnet_ipv4,
     var.vpc_dw_subnet_ipv6
   ]
-
 }
 

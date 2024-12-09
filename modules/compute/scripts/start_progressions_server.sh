@@ -2,22 +2,17 @@
 #!/bin/bash
 echo "Starting Progression's Server Script"
 
-# ########################## Swap configuration (1 GB of memory) #########################
-
+# -- Swap Memory Config
 SWAP_FILE_SIZE="4GB"
 SWAPPINESS=10
-
 echo "Setting up a swap file (size: $SWAP_FILE_SIZE, swappiness: $SWAPPINESS)..."
 
 # Create the swap file
 sudo fallocate -l ${SWAP_FILE_SIZE} /swapfile
-
 # Only root should be able to access to this file
 sudo chmod 600 /swapfile
-
 # Define the file as swap space
 sudo mkswap /swapfile
-
 # Enable the swap file, allowing the system to start using it
 sudo swapon /swapfile
 
@@ -36,33 +31,13 @@ sudo sysctl vm.swappiness=${SWAPPINESS}
 # Make this setting permanent, to not lose it on reboot
 sudo cp /etc/sysctl.conf /etc/sysctl.conf.bak
 echo "vm.swappiness=${SWAPPINESS}" | sudo tee -a /etc/sysctl.conf
-
 echo "Swap created" >> /var/log/startup-script.log
 
-# ########################## Install Docker #########################
-
-# https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-convenience-script
+# -- Docker Install
 sudo apt update
 curl -fsSL get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 rm get-docker.sh
-
-# install using apt repository
-# Add Docker's official GPG key:
-# sudo apt-get update
-# sudo apt-get install ca-certificates curl
-# sudo install -m 0755 -d /etc/apt/keyrings
-# sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-# sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-# # Add the repository to Apt sources:
-# echo \
-#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-# sudo apt-get update
-
-# sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # Allow using docker without sudo
 sudo usermod -aG docker $(whoami)
@@ -77,20 +52,16 @@ echo '{
 }
 ' | sudo tee /etc/docker/daemon.json
 
-sudo service docker restart # restart the daemon so the settings take effect
-
+# restart the daemon so the settings take effect
+sudo service docker restart
 echo "Docker installed and user added to docker group" >> /var/log/startup-script.log
 
+# -- Admin installs
 
-# ###################
-
-# Create new user
 # Create a new user (replace 'username' with the desired username)
 sudo adduser --disabled-password --gecos "" ubuntu
-
 # Add the new user to the docker group
 sudo usermod -aG docker ubuntu
-
 # Set up SSH access for the new user
 sudo mkdir -p /home/ubuntu/.ssh
 sudo cp /root/.ssh/authorized_keys /home/ubuntu/.ssh/

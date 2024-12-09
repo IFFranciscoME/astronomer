@@ -50,6 +50,9 @@ locals {
       { name = "exchanges", },
       { name = "markets", },
       { name = "agents", },
+      { name = "order-events", },
+      { name = "orderbooks", },
+      { name = "trade-events", },
     ]
   }
 

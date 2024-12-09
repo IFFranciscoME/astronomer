@@ -24,12 +24,12 @@ resource "google_compute_instance" "progressions" {
   tags = ["http-server", "https-server"]
 
   metadata = {
-      startup-script = file("${path.module}/scripts/init.sh")
+      startup-script = file("${path.module}/scripts/start_progressions_server.sh")
       ssh-keys       = "root:${file("${var.public_key_path}")}"
     }
 
   service_account {
-    email  = var.service_account_email
+    email  = var.gcp_client_email
     scopes = [
         "https://www.googleapis.com/auth/compute.readonly",
     ]

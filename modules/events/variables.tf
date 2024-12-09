@@ -15,3 +15,8 @@ variable "region" {
   type        = string
 }
 
+variable "vpc_id" {
+  description = "The fields for the VPC where the Data Platform operates"
+  type        = string
+}
+
