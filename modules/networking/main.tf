@@ -15,31 +15,18 @@ resource "google_compute_network" "data_platform_vpc" {
     delete = "10m"
   }
   
-  internal_ipv6_range = var.vpc_dl_subnet_ipv6
-  enable_ula_internal_ipv6 = true
-  
 }
 
 resource "google_compute_subnetwork" "data_lake_subnet" {
   
   name          = "data-lake-subnet"
-  region        = var.region
+  region        = var.pro_region
   network       = google_compute_network.data_platform_vpc.id
   
   ip_cidr_range = var.vpc_dl_subnet_ipv4
   ipv6_access_type = "INTERNAL"
 
-}
-
-resource "google_compute_subnetwork" "data_warehouse_subnet" {
   
-  name          = "data-warehouse-subnet"
-  region        = var.region
-  network       = google_compute_network.data_platform_vpc.id
-  
-  ip_cidr_range = var.vpc_dw_subnet_ipv4
-  ipv6_access_type = "INTERNAL"
-
 }
 
 resource "google_compute_firewall" "data_platform_firewall" {
@@ -57,9 +44,6 @@ resource "google_compute_firewall" "data_platform_firewall" {
 
   source_ranges = [
     var.vpc_dl_subnet_ipv4,
-    var.vpc_dl_subnet_ipv6,
-    var.vpc_dw_subnet_ipv4,
-    var.vpc_dw_subnet_ipv6
   ]
 }
 

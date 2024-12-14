@@ -9,3 +9,4 @@ variable "gcp_token_uri" {}
 variable "gcp_auth_uri" {}
 variable "project_id" {}
 variable "credentials_json" {}
+

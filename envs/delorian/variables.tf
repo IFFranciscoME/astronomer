@@ -1,26 +1,26 @@
 
-// ---------------------------------------------------------------------------------- GENERAL -- //
+// ---------------------------------------------------------------------------------- PROJECT -- //
 // ---------------------------------------------------------------------------------- ------- -- //
 
-variable "region" {
+variable "pro_region" {
   type        = string
   description = "The region to deploy resources, as specified by the Cloud Provider"
   default     = "us-central1"
 }
 
-variable "zone" {
+variable "pro_zone" {
   type        = string
   description = "The zone within the region to deploy resources, as specified by the Cloud Provider"
   default     = "us-central1-a"
 }
 
-variable "environment" {
+variable "pro_environment" {
   type        = string
   description = "a Tag to identify different environments to deploy"
   default     = "dev"
 }
 
-variable "project_id" {
+variable "pro_project_id" {
   type        = string
   description = "GCP Related: The whole project ID"
 }
@@ -43,45 +43,30 @@ variable "vpc_dl_subnet_ipv4" {
   type        = string
 }
 
-variable "vpc_dl_subnet_ipv6" {
-  description = ""
-  type        = string
-}
-
-variable "vpc_dw_subnet_ipv4" {
-  description = ""
-  type        = string
-}
-
-variable "vpc_dw_subnet_ipv6" {
-  description = ""
-  type        = string
-}
-
 // --------------------------------------------------------------------------------- DATABASE -- //
 // --------------------------------------------------------------------------------- -------- -- //
 
-variable "db_instance_name" {
+variable "dbm_instance_name" {
   type        = string
   description = "The name of the database instance"
 }
 
-variable "db_name" {
+variable "dbm_name" {
   type        = string
   description = "the name of a database"
 }
 
-variable "db_schema" {
+variable "dbm_schema" {
   description = "The schema of the database"
   type        = string
 }
 
-variable "db_instance_tier" {
+variable "dbm_instance_tier" {
   type        = string
   description = "the type of compute instance for the database"
 }
 
-variable "db_engine_version" {
+variable "dbm_engine_version" {
   type        = string
   description = "the database's engine version"
 }
@@ -103,13 +88,5 @@ variable "cmp_instance_name" {
 // ------------------------------------------------------------------------------- CREDENTIALS -- //
 // ------------------------------------------------------------------------------- ----------- -- //
 
-variable "gcp_credentials" {}
-
-variable "gcp_private_key_id" {}
-variable "gcp_private_key" {}
 variable "gcp_client_email" {}
-variable "gcp_client_id" {}
-variable "gcp_client_cert_url" {}
-variable "gcp_auth_provider" {}
-variable "gcp_token_uri" {}
-variable "gcp_auth_uri" {}
+

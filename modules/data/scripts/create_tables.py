@@ -7,7 +7,12 @@ from google.cloud import sql_v1beta4
 # --------------------------------------------------------------------------- #
 # --------------------------------------------------------------------------- #
 
-def create_tables(project_id, instance_id, db_name, table_name, columns):
+def create_tables(gcp_client_email,
+                  project_id,
+                  instance_id,
+                  db_name,
+                  table_name,
+                  columns):
     """
 
     """
@@ -24,8 +29,7 @@ def create_tables(project_id, instance_id, db_name, table_name, columns):
     conn = psycopg2.connect(
         host=f'/cloudsql/{connection_name}',
         dbname=db_name,
-        user='postgres',
-        password='your-password'
+        user=gcp_client_email,
     )
 
     # Create a cursor
@@ -52,13 +56,14 @@ def create_tables(project_id, instance_id, db_name, table_name, columns):
     conn.close()
 
 if __name__ == "__main__":
-    
-    project_id = sys.argv[0]
-    instance_id = sys.argv[1]
-    db_name = sys.argv[2]
-    table_name = sys.argv[3]
-    columns_json = sys.argv[4]
+   
+    gcp_client_email = sys.argv[0]
+    project_id = sys.argv[1]
+    instance_id = sys.argv[2]
+    db_name = sys.argv[3]
+    table_name = sys.argv[4]
+    columns_json = sys.argv[5]
     columns = json.loads(columns_json)
     
-    create_tables(project_id, instance_id, db_name, table_name, columns)
+    create_tables(gcp_client_email, project_id, instance_id, db_name, table_name, columns)
 

@@ -2,9 +2,9 @@
 terraform {
   cloud {
     organization = "iteralabs"
-    
+
     workspaces {
-      name = "dev"
+      name = "delorian"
     }
   }
 
@@ -24,9 +24,8 @@ terraform {
 
 provider "google" {
 
-  project = var.project_id
-  region  = var.region
-  credentials = var.gcp_credentials
+  project     = var.pro_project_id
+  region      = var.pro_region
 
 }
 

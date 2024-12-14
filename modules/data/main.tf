@@ -1,14 +1,28 @@
 
+resource "google_project_service" "sqladmin_api" {
+  project = var.pro_project_id
+  service = "sqladmin.googleapis.com"
+
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "servicenetworking_api" {
+  project = var.pro_project_id
+  service = "servicenetworking.googleapis.com"
+
+  disable_on_destroy = false
+}
+
 // --------------------------------------------------------------------- SQL MANAGED INSTANCE -- //
 // --------------------------------------------------------------------- -------------------- -- //
 
-resource "google_sql_database_instance" "db_data_lake_instance" {
-  name             = var.db_instance_name
-  database_version = var.db_engine_version 
-  region           = var.region
+resource "google_sql_database_instance" "dbm_data_lake_instance" {
+  name             = var.dbm_instance_name
+  database_version = var.dbm_engine_version 
+  region           = var.pro_region
 
   settings {
-    tier = var.db_instance_tier
+    tier = var.dbm_instance_tier
     
     ip_configuration {
       ipv4_enabled   = false
@@ -16,8 +30,8 @@ resource "google_sql_database_instance" "db_data_lake_instance" {
     }
 
     database_flags {
-      name  = "password_encryption"
-      value = "scram-sha-256"
+      name  = "cloudsql.iam_authentication"
+      value = "on"
     }
 
     password_validation_policy {
@@ -29,38 +43,37 @@ resource "google_sql_database_instance" "db_data_lake_instance" {
       enable_password_policy      = true
     }
   }
+
+  depends_on = [var.private_vpc_connection,
+                google_project_service.sqladmin_api,
+                google_project_service.servicenetworking_api,
+  ]
+
 }
 
 // -------------------------------------------------------------------------------- DATA BASE -- //
 // -------------------------------------------------------------------------------- --------- -- //
 
-resource "google_sql_database" "db_data_lake" {
-  name     = var.db_name
-  instance = google_sql_database_instance.db_data_lake_instance.name
+resource "google_sql_database" "dbm_data_lake" {
+  name     = var.dbm_name
+  instance = google_sql_database_instance.dbm_data_lake_instance.name
 }
 
-// ------------------------------------------------------------------------------ DATA TABLES -- //
-// ------------------------------------------------------------------------------ ----------- -- //
+// ------------------------------------------------------------------------ DB INSTANCE USERS -- //
+// ------------------------------------------------------------------------ ----------------- -- //
 
-resource "google_sql_database" "tables" {
-  
-  for_each = { for table in local.database_schema.tables : table.name => table }
-  name     = each.key
-  instance = var.db_name
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      python3 /scripts/create_table.py \
-        ${var.db_instance_name} \
-        ${var.db_name} \
-        ${each.key} \
-        '${jsonencode(each.value.columns)}'
-    EOT
-  }
-
+resource "google_sql_user" "iam_group_user" {
+  name     = trimsuffix(var.gcp_client_email, ".gserviceaccount.com")
+  instance = google_sql_database_instance.dbm_data_lake_instance.name
+  type     = "CLOUD_IAM_SERVICE_ACCOUNT"
   depends_on = [
-    google_sql_database_instance.db_data_lake_instance,
-    google_sql_database.db_data_lake
-  ]
-
+    google_sql_database_instance.dbm_data_lake_instance,
+    google_sql_database.dbm_data_lake,]
 }
+
+resource "google_project_iam_member" "cloudsql_admin" {
+  project = var.pro_project_id
+  role    = "roles/cloudsql.admin"
+  member  = "serviceAccount:${trimsuffix(var.gcp_client_email, ".serviceaacount.com")}"
+}
+

@@ -14,29 +14,18 @@ variable "vpc_dl_subnet_ipv4" {
   type = string
 }
 
-variable "vpc_dl_subnet_ipv6" {
-  description = ""
-  type = string
+variable "pro_project_id" {
+  type        = string
+  description = "GCP Related: The whole project ID"
 }
 
-variable "vpc_dw_subnet_ipv4" {
-  description = ""
-  type = string
-}
-
-variable "vpc_dw_subnet_ipv6" {
-  description = ""
-  type = string
-}
-
-variable "region" {
+variable "pro_region" {
   description = "The GCP region where the SQL instance will be created"
   type        = string
 }
 
-variable "environment" {
+variable "pro_environment" {
   type        = string
   description = "a Tag to identify different environments to deploy"
-  default     = "dev"
 }
 
