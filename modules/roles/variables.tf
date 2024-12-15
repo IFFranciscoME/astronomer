@@ -22,5 +22,10 @@ variable "dbm_name" {
   type        = string
 }
 
+variable "dbm_public_ip" {
+  description = "assignated IP to the DB Instance"
+  type        = string
+}
+
 variable "gcp_account_email" {}
 

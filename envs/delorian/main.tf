@@ -1,17 +1,4 @@
 
-module "roles" {
-
-  source = "../../modules/roles"
-
-  gcp_account_email = var.gcp_account_email
-
-  pro_project_id  = var.pro_project_id
-  pro_region      = var.pro_region
-  pro_environment = var.pro_environment
-
-  dbm_instance_name = var.dbm_instance_name
-}
-
 module "networking" {
 
   source = "../../modules/networking/"
@@ -45,6 +32,31 @@ module "data" {
   dbm_name           = var.dbm_name
   dbm_schema         = var.dbm_schema
   dbm_engine_version = var.dbm_engine_version
+
+}
+
+module "events" {
+
+  source = "../../modules/events/"
+
+  pro_project_id  = var.pro_project_id
+  pro_region      = var.pro_region
+  pro_environment = var.pro_environment
+  vpc_id          = module.networking.data_platform_vpc_id
+}
+
+module "roles" {
+
+  source = "../../modules/roles"
+
+  gcp_account_email = var.gcp_account_email
+
+  pro_project_id    = var.pro_project_id
+  pro_region        = var.pro_region
+  pro_environment   = var.pro_environment
+  dbm_name          = var.dbm_name
+  dbm_instance_name = var.dbm_instance_name
+  dbm_public_ip     = module.data.dbm_public_ip
 
 }
 

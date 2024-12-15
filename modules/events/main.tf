@@ -5,54 +5,64 @@
 resource "google_pubsub_topic" "progressions_topic" {
   name = "progressions-topic"
   schema_settings {
-    schema = google_pubsub_schema.enum_schema.id
+    schema = google_pubsub_schema.market_event_schema.id
     encoding = "JSON"
   }
 }
 
-resource "google_pubsub_schema" "enum_schema" {
+resource "google_pubsub_schema" "market_event_schema" {
 
-  name = "enum-schema"
+  name = "market-event-schema"
   type = "AVRO"
 
   definition = jsonencode({
+
     type = "record"
     name = "EnumMessage"
+    
     fields = [
       {
-        name = "enumField"
+        name = "eventType"
         type = {
           type = "enum"
           name = "EnumType"
-          symbols = ["RED", "GREEN", "BLUE"]
+          symbols = ["order_event", "trade_event"]
         }
       },
       {
-        name = "value"
+        name = "eventContent"
         type = "string"
       }
     ]
   })
 
 }
-// ----------------------------------------------------------------------------- RUN-FUNCTION -- //
-// ----------------------------------------------------------------------------- ------------ -- //
 
-resource "google_cloud_run_v2_job" "consumer_function" {
-  name     = "consumer-function"
-  location = var.region
-  deletion_protection = false
+resource "google_pubsub_schema" "data_event_schema" {
 
-  template {
-    template {
-      containers {
-        image = "us-docker.pkg.dev/cloudrun/container/job"
+  name = "data-event-schema"
+  type = "AVRO"
+
+  definition = jsonencode({
+
+    type = "record"
+    name = "EnumMessage"
+    
+    fields = [
+      {
+        name = "eventType"
+        type = {
+          type = "enum"
+          name = "EnumType"
+          symbols = ["write", "read"]
+        }
+      },
+      {
+        name = "eventContent"
+        type = "string"
       }
-    }
-  }
+    ]
+  })
+
 }
-
-// ---------------------------------------------------------------------------- CREATE TABLES -- //
-// ---------------------------------------------------------------------------- ------------- -- //
-
 

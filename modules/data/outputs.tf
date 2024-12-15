@@ -11,3 +11,6 @@ output "dbm_schema" {
   value = var.dbm_schema
 }
 
+output "dbm_public_ip" {
+  value = google_sql_database_instance.dbm_data_lake_instance.first_ip_address
+}

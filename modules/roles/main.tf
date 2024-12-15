@@ -27,6 +27,12 @@ resource "google_sql_user" "users" {
   name     = each.key
   password = random_password.user_passwords[each.key].result
   type     = "BUILT_IN"
+  
+  depends_on = [
+    google_sql_user.iam_service_account_user, 
+    var.dbm_instance_name,
+    var.dbm_name]
+
 }
 
 resource "random_password" "user_passwords" {
@@ -69,5 +75,11 @@ resource "google_secret_manager_secret_version" "user_credentials" {
     username = each.key
     password = random_password.user_passwords[each.key].result
   })
+  
+  depends_on = [
+    google_sql_user.iam_service_account_user, 
+    var.dbm_instance_name, 
+    var.dbm_name]
+
 }
 

@@ -1,16 +1,16 @@
 
-variable "project_id" {
+variable "pro_project_id" {
   type        = string
   description = "GCP Related: The whole project ID"
 }
 
-variable "environment" {
+variable "pro_environment" {
   type        = string
   description = "a Tag to identify different environments to deploy"
   default     = "dev"
 }
 
-variable "region" {
+variable "pro_region" {
   description = "The GCP region where the SQL instance will be created"
   type        = string
 }
