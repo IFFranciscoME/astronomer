@@ -1,18 +1,4 @@
 
-resource "google_project_service" "sqladmin_api" {
-  project = var.pro_project_id
-  service = "sqladmin.googleapis.com"
-
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "servicenetworking_api" {
-  project = var.pro_project_id
-  service = "servicenetworking.googleapis.com"
-
-  disable_on_destroy = false
-}
-
 // --------------------------------------------------------------------- SQL MANAGED INSTANCE -- //
 // --------------------------------------------------------------------- -------------------- -- //
 
@@ -44,10 +30,7 @@ resource "google_sql_database_instance" "dbm_data_lake_instance" {
     }
   }
 
-  depends_on = [var.private_vpc_connection,
-                google_project_service.sqladmin_api,
-                google_project_service.servicenetworking_api,
-  ]
+  depends_on = [var.vpc_private_connection]
 
 }
 
@@ -57,23 +40,6 @@ resource "google_sql_database_instance" "dbm_data_lake_instance" {
 resource "google_sql_database" "dbm_data_lake" {
   name     = var.dbm_name
   instance = google_sql_database_instance.dbm_data_lake_instance.name
-}
-
-// ------------------------------------------------------------------------ DB INSTANCE USERS -- //
-// ------------------------------------------------------------------------ ----------------- -- //
-
-resource "google_sql_user" "iam_group_user" {
-  name     = trimsuffix(var.gcp_client_email, ".gserviceaccount.com")
-  instance = google_sql_database_instance.dbm_data_lake_instance.name
-  type     = "CLOUD_IAM_SERVICE_ACCOUNT"
-  depends_on = [
-    google_sql_database_instance.dbm_data_lake_instance,
-    google_sql_database.dbm_data_lake,]
-}
-
-resource "google_project_iam_member" "cloudsql_admin" {
-  project = var.pro_project_id
-  role    = "roles/cloudsql.admin"
-  member  = "serviceAccount:${trimsuffix(var.gcp_client_email, ".serviceaacount.com")}"
+  
 }
 

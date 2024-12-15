@@ -47,13 +47,13 @@ variable "vpc_dl_subnet_ipv4" {
 // --------------------------------------------------------------------------------- -------- -- //
 
 variable "dbm_instance_name" {
-  type        = string
   description = "The name of the database instance"
+  type        = string
 }
 
 variable "dbm_name" {
-  type        = string
   description = "the name of a database"
+  type        = string
 }
 
 variable "dbm_schema" {
@@ -88,5 +88,7 @@ variable "cmp_instance_name" {
 // ------------------------------------------------------------------------------- CREDENTIALS -- //
 // ------------------------------------------------------------------------------- ----------- -- //
 
-variable "gcp_client_email" {}
-
+variable "gcp_account_email" {}
+variable "gcp_credentials" {}
+variable "TF_VAR_gcp_credentials" {}
+variable "TF_VAR_roles_output" {}

@@ -4,8 +4,8 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "private_vpc_connection" {
-  description = "The definition of the private VPC for cross communications"
+variable "vpc_private_connection" {
+  description = "One private connection"
 }
 
 variable "pro_region" {
@@ -71,5 +71,10 @@ locals {
     ]
   }
 
+}
+
+variable "gcp_account_email" {
+  description = "Service Account Email"
+  type        = string
 }
 

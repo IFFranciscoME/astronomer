@@ -1,14 +1,13 @@
 
 terraform {
+  
   cloud {
     organization = "iteralabs"
-
-    workspaces {
-      name = "delorian"
-    }
+    workspaces { name = "delorian" }
   }
 
   required_providers {
+    
     google = {
       source  = "hashicorp/google"
       version = "~> 6.12.0"
@@ -26,6 +25,7 @@ provider "google" {
 
   project     = var.pro_project_id
   region      = var.pro_region
+  credentials = var.gcp_credentials
 
 }
 
