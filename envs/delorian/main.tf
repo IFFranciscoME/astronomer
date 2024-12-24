@@ -3,60 +3,34 @@ module "networking" {
 
   source = "../../modules/networking/"
 
-  pro_project_id  = var.pro_project_id
-  pro_region      = var.pro_region
-  pro_environment = var.pro_environment
+  prj_project_id  = var.prj_project_id
+  prj_region      = var.prj_region
+  prj_environment = var.prj_environment
 
-  vpc_id             = module.networking.data_platform_vpc_id
+  vpc_id             = module.networking.data_lake_vpc_id
+  vpc_name           = var.vpc_name
   vpc_routing_mode   = var.vpc_routing_mode
   vpc_dl_subnet_ipv4 = var.vpc_dl_subnet_ipv4
 
 }
 
 module "data" {
-
   source = "../../modules/data/"
+
+  vpc_id                 = module.networking.data_lake_vpc_id
+  vpc_private_connection = module.networking.vpc_private_connection
 
   gcp_account_email = var.gcp_account_email
 
-  pro_project_id  = var.pro_project_id
-  pro_region      = var.pro_region
-  pro_environment = var.pro_environment
-  pro_zone        = var.pro_zone
-
-  vpc_id                 = module.networking.data_platform_vpc_id
-  vpc_private_connection = module.networking.vpc_private_connection
+  prj_project_id  = var.prj_project_id
+  prj_region      = var.prj_region
+  prj_environment = var.prj_environment
+  prj_zone        = var.prj_zone
 
   dbm_instance_name  = var.dbm_instance_name
   dbm_instance_tier  = var.dbm_instance_tier
   dbm_name           = var.dbm_name
-  dbm_schema         = var.dbm_schema
   dbm_engine_version = var.dbm_engine_version
-
-}
-
-module "events" {
-
-  source = "../../modules/events/"
-
-  pro_project_id  = var.pro_project_id
-  pro_region      = var.pro_region
-  pro_environment = var.pro_environment
-  vpc_id          = module.networking.data_platform_vpc_id
-}
-
-module "roles" {
-
-  source = "../../modules/roles"
-
-  gcp_account_email = var.gcp_account_email
-
-  pro_project_id    = var.pro_project_id
-  pro_region        = var.pro_region
-  pro_environment   = var.pro_environment
-  dbm_name          = var.dbm_name
-  dbm_instance_name = var.dbm_instance_name
-  dbm_public_ip     = module.data.dbm_public_ip
 
 }
 
