@@ -6,6 +6,11 @@ variable "vpc_id" {
   description = "the ID of the VPC to use for the data-lake resources"
 }
 
+variable "vpc_name" {
+  type        = string 
+  description = "the NAME of the VPC to use for the data-lake resources"
+}
+
 variable "vpc_routing_mode" {
   type        = string
   description = "config for the dynamic routing mode"

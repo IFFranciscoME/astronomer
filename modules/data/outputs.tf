@@ -1,12 +1,12 @@
 
 output "dbm_instance_name" {
-  value = google_sql_database_instance.dbm_data_lake_instance.name
+  value = ""
 }
 
 output "dbm_name" {
-  value = google_sql_database.dbm_data_lake.name
+  value = ""
 }
 
 output "dbm_public_ip" {
-  value = google_sql_database_instance.dbm_data_lake_instance.first_ip_address
+  value = ""
 }

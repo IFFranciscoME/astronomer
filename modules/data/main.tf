@@ -43,9 +43,3 @@ EOF
 // -------------------------------------------------------------------------------- DATA BASE -- //
 // -------------------------------------------------------------------------------- --------- -- //
 
-resource "google_sql_database" "dbm_data_lake" {
-  name     = var.dbm_name
-  instance = google_sql_database_instance.dbm_data_lake_instance.name
-  
-}
-
