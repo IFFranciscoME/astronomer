@@ -1,38 +1,44 @@
 
-// --------------------------------------------------------------------- SQL MANAGED INSTANCE -- //
-// --------------------------------------------------------------------- -------------------- -- //
+// ---------------------------------------------------- COMPUTE SERVER + DOCKER + POSTGRESQL  -- //
+// ---------------------------------------------------- ------------------------------------- -- //
 
-resource "google_sql_database_instance" "dbm_data_lake_instance" {
-  name             = var.dbm_instance_name
-  database_version = var.dbm_engine_version 
-  region           = var.pro_region
+resource "google_compute_instance" "dbm_postgresql_instance" {
+  name         = var.dbm_instance_name
+  machine_type = var.dbm_instance_tier
+  zone         = var.prj_region
 
-  settings {
-    tier = var.dbm_instance_tier
-    
-    ip_configuration {
-      ipv4_enabled   = false
-      private_network = var.vpc_id
-    }
-
-    database_flags {
-      name  = "cloudsql.iam_authentication"
-      value = "on"
-    }
-
-    password_validation_policy {
-      min_length                  = 15
-      complexity                  = "COMPLEXITY_DEFAULT"
-      reuse_interval              = 2
-      disallow_username_substring = true
-      password_change_interval    = "30s"
-      enable_password_policy      = true
+  boot_disk {
+    initialize_params {
+      image = "cos-cloud/cos-stable"
     }
   }
 
-  depends_on = [var.vpc_private_connection]
+  network_interface {
+    network = var.vpc_id
+    access_config {
+      // Ephemeral IP
+    }
+  }
 
+  metadata = {
+    gce-container-declaration = <<EOF
+spec:
+  containers:
+    - image: 'docker.io/iteralabs/datalake-web3-postgreSQL:latest'
+      name: docker-container
+      stdin: false
+      tty: false
+  restartPolicy: Always
+EOF
+  }
+
+  service_account {
+    scopes = ["cloud-platform"]
+  }
+
+  tags = ["docker-instance"]
 }
+
 
 // -------------------------------------------------------------------------------- DATA BASE -- //
 // -------------------------------------------------------------------------------- --------- -- //

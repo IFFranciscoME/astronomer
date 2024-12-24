@@ -6,6 +6,8 @@ resource "google_sql_user" "iam_service_account_user" {
   instance   = var.dbm_instance_name
   type       = "CLOUD_IAM_SERVICE_ACCOUNT"
   name       = trimsuffix(var.gcp_account_email, ".gserviceaccount.com")
+
+  depends_on = [var.dbm_instance_name, var.dbm_name]
 }
 
 // ------------------------------------------------------------------------ DB INSTANCE USERS -- //
@@ -62,7 +64,7 @@ resource "google_secret_manager_secret" "user_credentials" {
     replication {
       user_managed {
         replicas {
-          location = var.pro_region
+          location = var.prj_region
         }
       }
     }

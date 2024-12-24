@@ -1,14 +1,14 @@
 
-variable "project_id" {
+variable "prj_project_id" {
   description = "GCP Project ID"
 }
 
-variable "region" {
+variable "prj_region" {
   description = "The region to deploy to"
   default     = "us-central1"
 }
 
-variable "zone" {
+variable "prj_zone" {
   description = "The zone to deploy the instance"
   default     = "us-central1-a"
 }

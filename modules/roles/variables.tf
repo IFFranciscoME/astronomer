@@ -1,13 +1,13 @@
-variable "pro_environment" {
+variable "prj_environment" {
   description = "The cloud environment where everything is run"
 }
 
-variable "pro_project_id" {
+variable "prj_project_id" {
   description = "The GCP Project"
   type        = string
 }
 
-variable "pro_region" {
+variable "prj_region" {
   description = "The GCP region where the SQL instance will be created"
   type        = string
 }

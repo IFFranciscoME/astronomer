@@ -1,7 +1,7 @@
 
 resource "google_compute_instance" "progressions" {
-  project      = var.project_id
-  zone         = var.zone
+  project      = var.prj_project_id
+  zone         = var.prj_zone
   name         = var.cmp_instance_name
   machine_type = var.cmp_instance_type
 

@@ -1,6 +1,6 @@
 
 variable "vpc_id" {
-  description = "The fields for the VPC where the Data Platform operates"
+  description = "The fields for the VPC where the Data Lake operates"
   type        = string
 }
 
@@ -8,22 +8,22 @@ variable "vpc_private_connection" {
   description = "One private connection"
 }
 
-variable "pro_region" {
+variable "prj_region" {
   description = "The GCP region where the SQL instance will be created"
   type        = string
 }
 
-variable "pro_project_id" {
+variable "prj_project_id" {
   type        = string
   description = "GCP Related: The whole project ID"
 }
 
-variable "pro_zone" {
+variable "prj_zone" {
   description = "The GCP zone according to the region"
   type        = string
 }
 
-variable "pro_environment" {
+variable "prj_environment" {
   description = "The cloud environment where everything is run"
 }
 
@@ -44,11 +44,6 @@ variable "dbm_instance_tier" {
 
 variable "dbm_name" {
   description = "The name of the PostgreSQL database"
-  type        = string
-}
-
-variable "dbm_schema" {
-  description = "The schema of the PostgreSQL database"
   type        = string
 }
 
