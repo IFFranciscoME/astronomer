@@ -1,31 +1,20 @@
+
+// ----------------------------------------------------------------------------------- PROJECT -- //
+// ----------------------------------------------------------------------------------- ------- -- //
+
+variable "prj_region" {
+  type        = string
+  description = "The region to deploy resources, as specified by the Cloud Provider"
+  default     = "us-central1"
+}
+
 variable "prj_environment" {
-  description = "The cloud environment where everything is run"
+  type        = string
+  description = "a Tag to identify different environments to deploy"
+  default     = "dev"
 }
 
 variable "prj_project_id" {
-  description = "The GCP Project"
   type        = string
+  description = "GCP Related: The whole project ID"
 }
-
-variable "prj_region" {
-  description = "The GCP region where the SQL instance will be created"
-  type        = string
-}
-
-variable "dbm_instance_name" {
-  description = "The name of the SQL instance"
-  type        = string
-}
-
-variable "dbm_name" {
-  description = "The name of the PostgreSQL database"
-  type        = string
-}
-
-variable "dbm_public_ip" {
-  description = "assignated IP to the DB Instance"
-  type        = string
-}
-
-variable "gcp_account_email" {}
-

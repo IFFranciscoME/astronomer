@@ -1,5 +1,6 @@
 
-// -------------------------------------------------------------------------------------- VPC -- //
+// -------------------------------------------------------------------------------- NETWORKING -- //
+// -------------------------------------------------------------------------------- ---------- -- //
 
 variable "vpc_id" {
   type        = string 
@@ -16,9 +17,19 @@ variable "vpc_routing_mode" {
   description = "config for the dynamic routing mode"
 }
 
-variable "vpc_dl_subnet_ipv4" {
-  type = string
-  description = ""
+variable "firewall_name" { 
+  description = "The given name for the firewall to be used within the VPC"
+  type        = string
+}
+
+variable "subnet_name" {
+  description = "Name of the subnet to be used within the VPC"
+  type        = string
+}
+
+variable "subnet_ipv4" {
+  description = "the range of ipv4 ranges for the subnet to be used within the vpc"
+  type        = string
 }
 
 // ---------------------------------------------------------------------------------- PROJECT -- //
@@ -42,12 +53,12 @@ variable "prj_environment" {
 
 locals {
   
-  apis = {
+  prj_platform = {
+    "cloudresource" = { url = "cloudresourcemanager.googleapis.com" }
+    "iam" = { url = "iamcredentials.googleapis.com" }
     "networking" = { url = "servicenetworking.googleapis.com" }
     "services"  = { url = "serviceusage.googleapis.com" }
     "compute" = { url = "compute.googleapis.com" }
-    "pub/sub" = { url = "pubsub.googleapis.com" }
-    "secrets" = { url = "secretmanager.googleapis.com" }
   }
 
 }

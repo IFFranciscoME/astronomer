@@ -1,4 +1,9 @@
 
+variable "prj_environment" {
+  type        = string
+  description = "a Tag to identify different environments to deploy"
+}
+
 variable "prj_project_id" {
   description = "GCP Project ID"
 }
@@ -22,11 +27,20 @@ variable "cmp_instance_type" {
 variable "cmp_instance_name" {
   description = "The instance name for the server"
   type        = string
-  default     = "progression_server"
 }
 
 variable "cmp_instance_image" {
   description = "The source image to use"
-  default     = "projects/debian-cloud/global/images/family/debian-10"
+  type        = string
+}
+
+variable "cmp_subnet_id"  {
+  description = "The ID of the subnet where the server operates"
+  type = string
+}
+
+variable "cmp_instance_ssh" {
+  description = "SSH keys for connectivity (test purposes only)"
+  type = string
 }
 
